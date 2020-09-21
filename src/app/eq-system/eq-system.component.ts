@@ -33,4 +33,16 @@ export class EqSystemComponent implements OnInit {
     });
   }
 
+  removeEquation() {
+    /** TODO: add are you sure dialogue box? */
+    this.eqns.pop();
+  }
+
+  removeVariable() {
+    /** TODO: add are you sure dialogue box? */
+    this.eqns.map((eqn)=>{
+      eqn.pop();
+    });
+  }
+
 }
