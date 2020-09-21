@@ -22,7 +22,7 @@
                 +<input type="number" size="3" value="{{c}}" [(ngModel)]="constmat[i].coeffs[j]">
                 x{{j}}
             </span>
-            <select>
+            <select [(ngModel)]="constmat[i].type">
                 <option value='>'>></option>
                 <option value='<'>&lt;</option>
                 <option value='='>=</option>
