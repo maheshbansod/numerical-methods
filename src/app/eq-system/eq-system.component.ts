@@ -25,6 +25,7 @@ export class EqSystemComponent implements OnInit {
 
   addEquation() {
     this.eqns.push(Array(this.eqns[0].length).fill(0));
+    this.b.push(0);
   }
 
   addVariable() {
@@ -36,6 +37,7 @@ export class EqSystemComponent implements OnInit {
   removeEquation() {
     /** TODO: add are you sure dialogue box? */
     this.eqns.pop();
+    this.b.pop();
   }
 
   removeVariable() {
