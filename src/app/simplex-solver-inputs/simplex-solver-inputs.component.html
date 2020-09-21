@@ -1,7 +1,8 @@
 
 <button (click)="addConstraint()">Add constraint</button>
 <button (click)="addVariable()">Add variable</button>
-<button>Remove variable</button>
+<button (click)="removeVariable()">Remove variable</button>
+<button (click)="removeConstraint()">Remove constraint</button>
 <div>
     <div>
         <select [(ngModel)]='otype'>
@@ -30,3 +31,4 @@
         </div>
     </div>
 </div>
+<button>Solve</button>
