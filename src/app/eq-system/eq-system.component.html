@@ -1,0 +1,16 @@
+<div>
+    <div class="tools">
+      <button (click)="addEquation()">Add equation</button>
+      <button (click)="addVariable()">Add variable</button>
+      <button>Remove variable</button>
+      <button>Remove equation</button>
+    </div>
+    <div>
+      <div class="eqn" *ngFor="let eqn of eqns">
+        <span *ngFor="let xi of eqn; let i=index;">
+            +<input type="number" value="{{xi}}">x{{i}}
+        </span>
+        =<input type="number" name="b0">
+      </div>
+    </div>
+  </div>

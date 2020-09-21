@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EqSystemComponent } from './eq-system/eq-system.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EqSystemComponent
   ],
   imports: [
     BrowserModule,
