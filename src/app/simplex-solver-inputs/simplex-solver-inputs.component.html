@@ -1,28 +1,32 @@
+
+<button (click)="addConstraint()">Add constraint</button>
+<button (click)="addVariable()">Add variable</button>
+<button>Remove variable</button>
 <div>
     <div>
-        <select>
-            <option [selected]="otype=='max'">Maximize</option>
-            <option [selected]="otype=='min'">Minimize</option>
+        <select [(ngModel)]='otype'>
+            <option value='max'>Maximize</option>
+            <option value='min'>Minimize</option>
         </select>
         Z = 
-        <span *ngFor="let v of costi;let i=index">
-            +<input type="number" size="3" value="{{v}}" [attr.data-pos]="i" (change)="onCostChange($event)">
+        <span *ngFor="let v of costi; let i=index; trackBy: trackBy">
+            +<input type="number" name="c{{i}}" size="3" [(ngModel)]="costi[i]">
             x{{i}}
         </span>
     </div>
     <div>
         Subject to
-        <div *ngFor="let con of constmat;let i=index">
-            <span *ngFor="let c of con.coeffs;let j=index">
-                +<input type="number" size="3" value="{{c}}" [attr.data-pos]="i+','+j" (change)="onConstraintCoeffChange($event)">
+        <div *ngFor="let con of constmat;let i=index; trackBy: trackBy">
+            <span *ngFor="let c of con.coeffs;let j=index; trackBy: trackBy">
+                +<input type="number" size="3" value="{{c}}" [(ngModel)]="constmat[i].coeffs[j]">
                 x{{j}}
             </span>
             <select>
-                <option [selected]="con.type=='>'">></option>
-                <option [selected]="con.type=='<'">&lt;</option>
-                <option [selected]="con.type=='='">=</option>
+                <option value='>'>></option>
+                <option value='<'>&lt;</option>
+                <option value='='>=</option>
             </select> 
-            <input type="number" size="3" value="{{con.b}}" [attr.data-pos]="i" (change)="onConstraintConstChange($event)">
+            <input type="number" size="3" value="{{con.b}}" [(ngModel)]="constmat[i].b">
         </div>
     </div>
 </div>

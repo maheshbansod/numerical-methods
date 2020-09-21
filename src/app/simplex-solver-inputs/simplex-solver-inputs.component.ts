@@ -17,21 +17,23 @@ export class SimplexSolverInputsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onCostChange(event) {
-    let pos = Number(event.target.getAttribute('data-pos'));
-    this.costi[pos] = Number(event.target.value);
-  }
+  // onCostChange(event) {
+  //   let pos = Number(event.target.getAttribute('data-pos'));
+  //   this.costi[pos] = Number(event.target.value);
+  //   console.log(this.costi)
+  // }
 
-  onConstraintCoeffChange(event) {
-    let pos = event.target.getAttribute('data-pos');
-    let [i,j] = pos.split(',');
-    this.constmat[i].coeffs[j]=Number(event.target.value);
-  }
+  // onConstraintCoeffChange(event) {
+  //   let pos = event.target.getAttribute('data-pos');
+  //   let [i,j] = pos.split(',');
+  //   this.constmat[i].coeffs[j]=Number(event.target.value);
+  //   console.log(this.constmat);
+  // }
 
-  onConstraintConstChange(event) {
-    let pos = event.target.getAttribute('data-pos');
-    this.constmat[pos].b = Number(event.target.value);
-  }
+  // onConstraintConstChange(event) {
+  //   let pos = Number(event.target.getAttribute('data-pos'));
+  //   this.constmat[pos].b = Number(event.target.value);
+  // }
 
   addVariable() {
     this.costi.push(0);
@@ -43,6 +45,7 @@ export class SimplexSolverInputsComponent implements OnInit {
 
   addConstraint() {
     this.constmat.push({type:'=',coeffs: Array(this.costi.length).fill(0), b:0});
+    console.log(this.constmat);
   }
 
   removeVariable() {
@@ -51,6 +54,10 @@ export class SimplexSolverInputsComponent implements OnInit {
     this.constmat.map((eqn)=>{
       eqn.coeffs.pop();
     });
+  }
+
+  trackBy(index: any, item: any) {
+    return index;
   }
 
 }
