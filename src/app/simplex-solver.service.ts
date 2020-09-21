@@ -65,37 +65,47 @@ export class SimplexSolverService {
       
       let minr = Infinity,lv=0;
       for(var i=0;i<this.constmat.length;i++) {
-        let r:Number;
+        let r;
         if(this.constmat[i].coeffs[ev] == 0)
           continue;
         r = this.constmat[i].b/this.constmat[i].coeffs[ev];
         if(r < 0)
           continue;
         if(minr > r) {
-          r = minr;
+          minr = r;
           lv = i;
         }
       }
+      //console.log(minr, lv)
       //if minr is infinity then stop
 
       //Pivot element is at ev,lv
 
-      console.log('pivot',ev,lv);
+      //console.log('pivot',ev,lv);
 
       basis[lv] = ev;
+      this.constmat[lv].b /= this.constmat[lv].coeffs[ev];
       for(var i=0;i<this.costi.length;i++) {
-        this.constmat[lv].coeffs[i] /= this.constmat[lv][ev];
+        this.constmat[lv].coeffs[i] /= this.constmat[lv].coeffs[ev];
       }
       for(var i=0;i<this.constmat.length;i++) {
         if(i == lv)
           continue;
         let f = this.constmat[i].coeffs[ev];
+        if(f == 0)
+          continue;
+        // console.log(this.constmat[i].b,'-',this.constmat[lv].b,'*',f);
+        this.constmat[i].b -= this.constmat[lv].b*f;
+        // console.log('=',this.constmat[i].b);
         for(var j=0;j<this.costi.length;j++) {
+          // console.log(this.constmat[i].coeffs[j], '-', this.constmat[lv].coeffs[j],'*',f);
           this.constmat[i].coeffs[j] -= this.constmat[lv].coeffs[j]*f;
+          // console.log(this.constmat[i].coeffs[j]);
         }
       }
-      console.log(basis);
-      console.log(this.constmat);
+      //console.log(basis);
+      //console.log(this.constmat);
     }
+    return {basis: basis, b: this.constmat.map( (c)=>c.b )};
   }
 }

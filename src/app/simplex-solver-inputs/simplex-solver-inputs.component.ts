@@ -12,6 +12,7 @@ export class SimplexSolverInputsComponent implements OnInit {
   otype = "max"; //maximization or minimization problem
 
   constmat = [{type:'=',coeffs:[0,0],b:0 }]; //constraint matrix
+  solution = {};
 
   constructor(private simplexSolverService: SimplexSolverService) { }
 
@@ -27,7 +28,7 @@ export class SimplexSolverInputsComponent implements OnInit {
 
   solveSimplex() {
     this.simplexSolverService.set(this.otype, this.costi, this.constmat);
-    this.simplexSolverService.solve();
+    this.solution = this.simplexSolverService.solve();
   }
 
   addVariable() {

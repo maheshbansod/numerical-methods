@@ -32,3 +32,8 @@
     </div>
 </div>
 <button (click)="solveSimplex()">Solve</button>
+<div *ngIf="solution">
+    <p *ngFor="let v of solution.basis; let i=index;">
+        x{{v}} = {{solution.b[i]}}
+    </p>
+</div>
