@@ -1,6 +1,8 @@
 # NumericalMethods
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.2.
+This project contains numerical methods.
+
+It contains the simplex method of solving linear programming problems. Would include more later. Maybe.
 
 ## Development server
 
