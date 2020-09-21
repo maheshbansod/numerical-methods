@@ -56,8 +56,9 @@ export class SimplexSolverService {
       n = this.an++;
     }
       if(off != -1) {
-        this.costi.splice(off+n,0,(vtype=='s')?0:this.bigM);
-        this.constmat.map( (c)=>c.coeffs.splice(off+n, 0,0) )
+        this.costi.splice(off+n-1,0,(vtype=='s')?0:this.bigM);
+        this.constmat.map( (c)=>c.coeffs.splice(off+n-1, 0,0) );
+        // console.log('index:',off+n-1, vtype);
       } else {
         if(vtype == 's') {
           this.soff = this.costi.length;
@@ -84,11 +85,13 @@ export class SimplexSolverService {
       } else if(this.constmat[i].type == '>' || this.constmat[i].type == '=') { //add slack and artificial
         let si = this.addVariable('s');
         let ai = this.addVariable('a');
-        this.constmat[i].type = '=';
-        this.constmat[i].coeffs[ai] = this.constmat[i].coeffs[si] = 1;
+        this.constmat[i].coeffs[ai] = 1;
+        this.constmat[i].coeffs[si] = -1;
         if(this.constmat[i].type == '=') {
+          console.log("ayy");
           this.constmat.push({type:'<',coeffs: this.constmat[i].coeffs.map((x)=>x), b:this.constmat[i].b});
         }
+        this.constmat[i].type = '=';
       }
     }
     console.log(this.constmat);
