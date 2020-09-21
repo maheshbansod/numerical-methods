@@ -17,6 +17,22 @@ export class SimplexSolverInputsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onCostChange(event) {
+    let pos = Number(event.target.getAttribute('data-pos'));
+    this.costi[pos] = Number(event.target.value);
+  }
+
+  onConstraintCoeffChange(event) {
+    let pos = event.target.getAttribute('data-pos');
+    let [i,j] = pos.split(',');
+    this.constmat[i].coeffs[j]=Number(event.target.value);
+  }
+
+  onConstraintConstChange(event) {
+    let pos = event.target.getAttribute('data-pos');
+    this.constmat[pos].b = Number(event.target.value);
+  }
+
   addVariable() {
     this.costi.push(0);
 
