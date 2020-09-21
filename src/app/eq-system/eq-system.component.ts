@@ -20,6 +20,17 @@ export class EqSystemComponent implements OnInit {
 
   constructor() { }
 
+  onChangeConstant(event) {
+    let pos = Number(event.target.getAttribute('data-pos'));
+    this.b[pos] = event.target.value;
+  }
+
+  onChangeCoeff(event) {
+    let pos = event.target.getAttribute('data-pos');
+    let [posi,posj]=pos.split(',');
+    this.eqns[posi][posj]=Number(event.target.value);
+  }
+
   ngOnInit(): void {
   }
 

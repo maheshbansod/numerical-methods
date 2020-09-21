@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EqSystemComponent } from './eq-system/eq-system.component';
+import { SimplexSolverInputsComponent } from './simplex-solver-inputs/simplex-solver-inputs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EqSystemComponent
+    EqSystemComponent,
+    SimplexSolverInputsComponent
   ],
   imports: [
     BrowserModule,

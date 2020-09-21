@@ -1,0 +1,26 @@
+<div>
+    <div>
+        <select>
+            <option [selected]="otype=='max'">Maximize</option>
+            <option [selected]="otype=='min'">Minimize</option>
+        </select>
+        Z = 
+        <span *ngFor="let v of costi;let i=index">
+            +<input type="number" size="3" value="{{v}}">x{{i}}
+        </span>
+    </div>
+    <div>
+        Subject to
+        <div *ngFor="let con of constmat;let i=index">
+            <span *ngFor="let c of con.coeffs;let j=index">
+                +<input type="number" size="3" value="{{c}}">x{{j}}
+            </span>
+            <select>
+                <option [selected]="con.type=='>'">></option>
+                <option [selected]="con.type=='<'">&lt;</option>
+                <option [selected]="con.type=='='">=</option>
+            </select> 
+            <input type="number" size="3" value="{{con.b}}">
+        </div>
+    </div>
+</div>
