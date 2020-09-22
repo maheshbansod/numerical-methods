@@ -7,20 +7,18 @@ export class SimplexSolverService {
 
   constructor() { }
 
-  costi = [8,5]; //Cost function coeffs
+  costi = [-5,-10]; //Cost function coeffs
   otype = "max"; //maximization or minimization problem
   status = 'idle';
 
   constmat = [
-              {type:'<',coeffs:[2,1],b:500 },
-              {type:'<',coeffs:[1,0],b:150 },
-              {type:'<',coeffs:[0,1],b:250}
+              {type:'=',coeffs:[1,1],b:5 },
+              {type:'<',coeffs:[1,0],b:4 },
+              {type:'>',coeffs:[0,1],b:2}
             ]; //constraint matrix
 
-  soff = -1; //slack variables offset
-  sn = 0; //no. of slack variables
-  aoff = -1; //artificial variables offset
-  an = 0; //no. of artificial variables
+  sstart = -1; // start of slack/surplus variables
+  astart = -1; // start of artificial variables = also end of slack/surplus vars
   
   bigM = 999999;
 
@@ -47,30 +45,20 @@ export class SimplexSolverService {
   }
 
   addVariable(vtype) {
-    let off, n;
+    let i=-1;
     if(vtype == 's') {
-      off = this.soff;
-      n = this.sn++;
-    } else {
-      off = this.aoff;
-      n = this.an++;
-    }
-      if(off != -1) {
-        this.costi.splice(off+n-1,0,(vtype=='s')?0:this.bigM);
-        this.constmat.map( (c)=>c.coeffs.splice(off+n-1, 0,0) );
-        // console.log('index:',off+n-1, vtype);
+      if(this.sstart == -1) {
+        this.sstart = this.astart = i = this.costi.length;
+        this.costi.push(0);
       } else {
-        if(vtype == 's') {
-          this.soff = this.costi.length;
-          this.costi.push(0);
-        }
-        else {
-          this.aoff = this.costi.length;
-          this.costi.push(this.bigM);
-        }
-        this.constmat.map( (c)=>c.coeffs.push(0) );
+        i = ++this.astart-1
+        this.costi.splice(i,0,0);
       }
-      return off+n-1;
+    } else {
+      i = this.costi.length;
+      this.costi.push(-this.bigM);
+    }
+    return i;//return index
   }
 
   solve() {
@@ -159,6 +147,14 @@ export class SimplexSolverService {
       //console.log(basis);
       //console.log(this.constmat);
     }
-    return {basis: basis, b: this.constmat.map( (c)=>c.b )};
+    let soln = {basis: [],b:[]}
+    
+    basis.forEach((x,i)=>{
+      if(x<this.sstart) {
+        soln.basis.push(x);
+        soln.b.push(this.constmat[i].b);
+      }
+    });
+    return soln;
   }
 }
