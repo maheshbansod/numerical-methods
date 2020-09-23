@@ -1,0 +1,36 @@
+<div>
+    <div>
+        Choose method for finding initial solution
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td></td>
+                <td></td>
+                <th [attr.colspan]="table[0].length+1">Destinations</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td *ngFor="let row of table[0]; let i=index;">D<sub>{{i}}</sub></td>
+                <td>Supply</td>
+            </tr>
+            <tr><th [attr.rowspan]="table.length+1">Sources</th></tr>
+            <tr *ngFor="let row of table; let i=index;">
+                <td>S<sub>{{i}}</sub></td>
+                <td *ngFor="let c of row">
+                    <input type="number" value="{{c}}" size="3">
+                </td>
+                <td><input type="number" value="{{supplys[i]}}" size="3"></td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>Demand</td>
+                <td *ngFor="let row of table[0]; let i=index;">
+                    <input type="number" value="{{demands[i]}}" size="3">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

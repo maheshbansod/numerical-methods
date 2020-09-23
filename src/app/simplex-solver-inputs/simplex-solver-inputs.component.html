@@ -1,39 +1,40 @@
 
-<button (click)="addConstraint()">Add constraint</button>
-<button (click)="addVariable()">Add variable</button>
-<button (click)="removeVariable()">Remove variable</button>
-<button (click)="removeConstraint()">Remove constraint</button>
+<h1>SOLVE LINEAR PROGRAMMING PROBLEM USING SIMPLEX METHOD</h1>
+<button (click)="addConstraint()" class="addbtn">Add constraint</button>
+<button (click)="addVariable()" class="addbtn">Add variable</button>
+<button (click)="removeVariable()" class="removebtn">Remove variable</button>
+<button (click)="removeConstraint()" class="removebtn">Remove constraint</button>
 <div>
-    <div>
+    <div class="cost_wrap eqn">
         <select [(ngModel)]='otype'>
             <option value='max'>Maximize</option>
             <option value='min'>Minimize</option>
         </select>
         Z = 
         <span *ngFor="let v of costi; let i=index; trackBy: trackBy">
-            +<input type="number" name="c{{i}}" size="3" [(ngModel)]="costi[i]">
-            x{{i}}
+            +<input type="number" name="c{{i}}" size="1" [(ngModel)]="costi[i]">
+            x<sub>{{i}}</sub>
         </span>
     </div>
-    <div>
+    <div class="const_wrap">
         Subject to
-        <div *ngFor="let con of constmat;let i=index; trackBy: trackBy">
+        <div *ngFor="let con of constmat;let i=index; trackBy: trackBy" class="eqn">
             <span *ngFor="let c of con.coeffs;let j=index; trackBy: trackBy">
-                +<input type="number" size="3" value="{{c}}" [(ngModel)]="constmat[i].coeffs[j]">
-                x{{j}}
+                +<input type="number" size="1" value="{{c}}" [(ngModel)]="constmat[i].coeffs[j]">
+                x<sub>{{j}}</sub>
             </span>
             <select [(ngModel)]="constmat[i].type">
                 <option value='>'>></option>
                 <option value='<'>&lt;</option>
                 <option value='='>=</option>
-            </select> 
-            <input type="number" size="3" value="{{con.b}}" [(ngModel)]="constmat[i].b">
+            </select>
+            <input type="number" size="1" value="{{con.b}}" [(ngModel)]="constmat[i].b">
         </div>
     </div>
 </div>
 <button (click)="solveSimplex()">Solve</button>
 <div *ngIf="solution">
     <p *ngFor="let v of solution.basis; let i=index;">
-        x{{v}} = {{solution.b[i]}}
+        x<sub>{{v}}</sub> = {{solution.b[i]}}
     </p>
 </div>

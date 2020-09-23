@@ -5,11 +5,13 @@ import {FormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SimplexSolverInputsComponent } from './simplex-solver-inputs/simplex-solver-inputs.component';
+import { TransportationSolveComponent } from './transportation-solve/transportation-solve.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SimplexSolverInputsComponent
+    SimplexSolverInputsComponent,
+    TransportationSolveComponent
   ],
   imports: [
     BrowserModule,
