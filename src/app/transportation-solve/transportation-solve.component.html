@@ -1,6 +1,9 @@
 <div>
     <div>
-        Choose method for finding initial solution
+        <button (click)="addSource()">Add source</button>
+        <button (click)="addDestination()">Add destination</button>
+        <button (click)="removeSource()">Remove source</button>
+        <button (click)="removeDestination()">Remove destination</button>
     </div>
     <div>
         <table>
@@ -16,19 +19,19 @@
                 <td>Supply</td>
             </tr>
             <tr><th [attr.rowspan]="table.length+1">Sources</th></tr>
-            <tr *ngFor="let row of table; let i=index;">
+            <tr *ngFor="let row of table; let i=index; trackBy: trackBy">
                 <td>S<sub>{{i}}</sub></td>
-                <td *ngFor="let c of row">
-                    <input type="number" value="{{c}}" size="3">
+                <td *ngFor="let c of row;let j=index; trackBy: trackBy">
+                    <input type="number" [(ngModel)]="table[i][j]" size="3">
                 </td>
-                <td><input type="number" value="{{supplys[i]}}" size="3"></td>
+                <td><input type="number" [(ngModel)]="supplys[i]" size="3"></td>
             </tr>
             <tr>
                 <td>
                 </td>
                 <td>Demand</td>
-                <td *ngFor="let row of table[0]; let i=index;">
-                    <input type="number" value="{{demands[i]}}" size="3">
+                <td *ngFor="let row of table[0]; let i=index; trackBy: trackBy">
+                    <input type="number" [(ngModel)]="demands[i]" size="3">
                 </td>
             </tr>
         </table>
