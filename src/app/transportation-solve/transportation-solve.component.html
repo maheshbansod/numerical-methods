@@ -36,4 +36,34 @@
             </tr>
         </table>
     </div>
+    <div>
+        <button (click)="findInitialSolution('nwcr')">North West Corner Rule</button>
+    </div>
+    <div class="solution" *ngIf="showsolution">
+        <table>
+            <tr>
+                <td></td>
+                <td *ngFor="let _ of table[0];let i=index;">
+                    D<sub>{{i}}</sub>
+                </td>
+                <td>Supply</td>
+            </tr>
+            <tr *ngFor="let row of table; let i=index;">
+                <td>S<sub>{{i}}</sub></td>
+                <td *ngFor="let c of row;let j=index;">
+                    <div class="weight" *ngIf="solution.weights[i][j] != 0">
+                        {{solution.weights[i][j]}}
+                    </div>
+                    <div class="cost">{{c}}</div>
+                </td>
+                <td>{{supplys[i]}}</td>
+            </tr>
+            <tr>
+                <td>Demand</td>
+                <td *ngFor="let row of table[0]; let i=index; trackBy: trackBy">
+                    {{demands[i]}}
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
