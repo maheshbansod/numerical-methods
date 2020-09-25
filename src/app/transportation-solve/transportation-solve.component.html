@@ -38,6 +38,7 @@
     </div>
     <div>
         <button (click)="findInitialSolution('nwcr')">North West Corner Rule</button>
+        <button (click)="findInitialSolution('lcm')">Least Cost Method</button>
     </div>
     <div class="solution" *ngIf="showsolution">
         <table>
@@ -77,5 +78,6 @@
                 </td>
             </tr>
         </table>
+        The cost is {{getCost(table, solution.weights)}}
     </div>
 </div>
