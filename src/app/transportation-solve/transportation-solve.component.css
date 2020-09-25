@@ -9,10 +9,15 @@
 .weight {
     padding-right:6px;
     padding-left:6px;
+    color: goldenrod;
 }
 
 .solution td {
     border: 1px solid black;
     padding:0;
     margin:0;
+}
+
+.strikeit {
+    text-decoration: line-through;
 }

@@ -56,12 +56,24 @@
                     </div>
                     <div class="cost">{{c}}</div>
                 </td>
-                <td>{{supplys[i]}}</td>
+                <td>
+                    <ng-container *ngFor="let s of solution.supplys[i];let i=index">
+                        <span [ngClass]="{'strikeit':i!=0}">
+                            {{s}}
+                        </span>
+                        ,
+                    </ng-container>
+                </td>
             </tr>
             <tr>
                 <td>Demand</td>
                 <td *ngFor="let row of table[0]; let i=index; trackBy: trackBy">
-                    {{demands[i]}}
+                    <ng-container *ngFor="let s of solution.demands[i];let i=index">
+                        <span [ngClass]="{'strikeit':i!=0}">
+                            {{s}}
+                        </span>
+                        ,
+                    </ng-container>
                 </td>
             </tr>
         </table>
