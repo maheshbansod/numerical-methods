@@ -40,6 +40,11 @@ button:hover {
 
 input {
     border: none;
+    border-bottom: 2px solid transparent;
     font-size: large;
     font-weight: bold;
+}
+
+input:hover {
+    border-bottom: 2px solid skyblue;
 }
