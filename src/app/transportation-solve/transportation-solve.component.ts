@@ -153,7 +153,6 @@ export class TransportationSolveComponent implements OnInit {
 
         it++;
       }
-      console.log(penaltys, penaltyd);
       penaltys = penaltys.filter((x)=>x.length >0).map( (r)=>r.map( (x)=>(x==-Infinity)?"-":x) );
       penaltyd = penaltyd.filter((x)=>x.length >0).map( (r)=>r.map( (x)=>(x==-Infinity)?"-":x) );
 
