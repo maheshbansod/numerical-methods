@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-transportation-solve',
@@ -75,6 +76,90 @@ export class TransportationSolveComponent implements OnInit {
       }
 
       this.solution = {weights:weights, supplys: supplys, demands:demands};
+      this.showsolution = true;
+    } else if(method == 'vam') { //vogel's approximation method
+      let penaltys = [];
+      let penaltyd = [];
+      let table = this.table.map( (x)=>x.map(x=>x) );
+      let i=0,j=0, it=0,fm, sm, dops=true, dopd=true;
+      while(1) {
+        penaltys.push([]);
+        if(dops) {
+          for(i=0;i<supplys.length;i++) {
+            [fm, sm] = table[i].slice().sort( (a,b)=>a-b).slice(0,2);
+            if(isFinite(fm) && isFinite(sm))
+              penaltys[it].push( sm - fm );
+            else if(isFinite(fm)) {
+              penaltys[it].push(fm);
+            } else {
+              penaltys[it].push(-Infinity);
+            }
+          }
+        }
+
+        penaltyd.push([]);
+        if(dopd) {
+          for(i=0;i<demands.length;i++) {
+            [fm, sm] = table.map( (r)=>r[i] ).sort( (a,b)=>a-b ).slice(0,2);
+            if(isFinite(fm) && isFinite(sm))
+              penaltyd[it].push( sm - fm );
+            else if(isFinite(fm)) {
+              penaltyd[it].push(fm);
+            } else
+              penaltyd[it].push(-Infinity);
+          }
+        }
+
+        let maxps = Math.max(...penaltys[it]);
+        let maxpd = Math.max(...penaltyd[it]);
+
+        if(!isFinite(-maxps) && !isFinite(-maxpd))
+          break;
+        let mini = 0; //index of cost of minimum
+        if(maxps < maxpd) {
+          let pi = penaltyd[it].indexOf(maxpd);
+          for(i=1;i<supplys.length;i++)
+            if(table[i][pi] < table[mini][pi]) {
+              mini = i;
+            }
+          i=mini;
+          j=pi;
+        } else {
+          let pi = penaltys[it].indexOf(maxps);
+          for(i=1;i<demands.length;i++)
+            if(table[pi][i] < table[pi][mini]) {
+              mini = i;
+            }
+          i = pi;
+          j = mini;
+        }
+        if(supplys[i][0] < demands[j][0]) {
+          weights[i][j]=supplys[i][0];
+          demands[j].unshift(demands[j][0]-supplys[i][0]);
+          supplys[i].unshift(0);
+          mini = i;
+          dopd = true; dops = false;
+          for(i=0;i<table[0].length;i++)
+            table[mini][i] = Infinity;
+        } else {
+          weights[i][j] = demands[j][0];
+          supplys[i].unshift(supplys[i][0]-demands[j][0]);
+          demands[j].unshift(0);
+          mini = j;
+          dopd = false; dops = true;
+          for(i=0;i<table.length;i++)
+            table[i][mini] = Infinity;
+        }
+
+        it++;
+      }
+      console.log(penaltys, penaltyd);
+      penaltys = penaltys.filter((x)=>x.length >0).map( (r)=>r.map( (x)=>(x==-Infinity)?"-":x) );
+      penaltyd = penaltyd.filter((x)=>x.length >0).map( (r)=>r.map( (x)=>(x==-Infinity)?"-":x) );
+
+      this.solution = {weights:weights, supplys:supplys, demands: demands, 
+        penaltys:penaltys, penaltyd: penaltyd
+      };
       this.showsolution = true;
     }
   }

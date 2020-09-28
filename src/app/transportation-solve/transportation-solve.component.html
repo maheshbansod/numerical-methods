@@ -39,6 +39,7 @@
     <div>
         <button (click)="findInitialSolution('nwcr')">North West Corner Rule</button>
         <button (click)="findInitialSolution('lcm')">Least Cost Method</button>
+        <button (click)="findInitialSolution('vam')">Vogel's Approximation Method</button>
     </div>
     <div class="solution" *ngIf="showsolution">
         <table>
@@ -48,6 +49,9 @@
                     D<sub>{{i}}</sub>
                 </td>
                 <td>Supply</td>
+                <td *ngIf="solution.penaltys" [attr.colspan]="solution.penaltys[0].length">
+                    Penalties
+                </td>
             </tr>
             <tr *ngFor="let row of table; let i=index;">
                 <td>S<sub>{{i}}</sub></td>
@@ -65,6 +69,9 @@
                         ,
                     </ng-container>
                 </td>
+                <td *ngFor="let p of solution.penaltys;">
+                    {{p[i]}}
+                </td>
             </tr>
             <tr>
                 <td>Demand</td>
@@ -77,6 +84,16 @@
                     </ng-container>
                 </td>
             </tr>
+            <tr *ngIf="solution.penaltyd">
+                <td [attr.rowspan]="solution.penaltyd.length+1">Penalties</td>
+            </tr>
+            <ng-container *ngIf="solution.penaltyd">
+                <tr *ngFor="let pr of solution.penaltyd">
+                    <td *ngFor="let p of pr">
+                        {{p}}
+                    </td>
+                </tr>
+            </ng-container>
         </table>
         The cost is {{getCost(table, solution.weights)}}
     </div>
