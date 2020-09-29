@@ -96,5 +96,50 @@
             </ng-container>
         </table>
         The cost is {{getCost(table, solution.weights)}}
+        <div class="solvebtns">
+            <button (click)="solveProblem('modi')">Solve using MODI method</button>
+        </div>
+        <div class="csolution" *ngIf="solution.eqs">
+            <div class="eqn" *ngFor="let eq of solution.eqs[0]">
+                u<sub>{{eq.i}}</sub> + v<sub>{{eq.j}}</sub> = {{eq.c}}
+            </div>
+            <p>Setting the first u value to be 0. We get the following values of u and v</p>
+            <div class="uv-sol" style="display: flex">
+                <div class="u-sol">
+                    <div *ngFor="let u of solution.u[0];let i=index;">
+                        u<sub>{{i}}</sub>={{u}},
+                    </div>
+                </div>
+                <div class="v-sol">
+                    <div *ngFor="let v of solution.v[0];let i=index;">
+                        v<sub>{{i}}</sub>={{v}}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                        </td>
+                        <td *ngFor="let _ of demands;let i=index;">
+                            D{{i}}
+                        </td>
+                    </tr>
+                    <tr *ngFor="let r of table;let i=index;">
+                        <td>S{{i}}</td>
+                        <td *ngFor="let c of r; let j=index">
+                            <div class="weight" *ngIf="solution.mweight[0][i][j]==0">
+                                {{solution.oppcost[0][i][j]}}
+                            </div>
+                            <div class="weight" *ngIf="solution.mweight[0][i][j]!=0">
+                                <span class="circled">{{solution.mweight[0][i][j]}}</span>
+                            </div>
+                            <div class="cost">{{c}}</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
     </div>
 </div>
